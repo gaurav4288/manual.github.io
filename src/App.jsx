@@ -73,12 +73,10 @@ function App() {
       const id = children[0]?.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
       return <h3 id={id}>{children}</h3>;
     },
-    // Rewrite image sources to work from public folder with absolute base path
+    // Rewrite image sources to work from public folder
     img: ({ node, src, alt }) => {
-      // Strip leading slash from src if present
-      const cleanSrc = src.startsWith('/') ? src.slice(1) : src;
-      // If it's a relative path like 'asset/img.png', prefix it with Vite's BASE_URL
-      const imgSrc = src.startsWith('http') ? src : `${import.meta.env.BASE_URL}${cleanSrc}`;
+      // If it's a relative path like 'asset/img.png', Vite serves it from root if it's in public/asset
+      const imgSrc = src.startsWith('http') ? src : `/${src}`;
       return <img src={imgSrc} alt={alt} loading="lazy" />;
     }
   };
