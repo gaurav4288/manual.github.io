@@ -73,10 +73,10 @@ function App() {
       const id = children[0]?.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
       return <h3 id={id}>{children}</h3>;
     },
-    // Rewrite image sources to work from public folder
+    // Rewrite image sources to work from public folder with relative base path
     img: ({ node, src, alt }) => {
-      // If it's a relative path like 'asset/img.png', make sure it loads
-      const imgSrc = src.startsWith('http') ? src : `/${src}`;
+      // If it's a relative path like 'asset/img.png', make sure it loads relative to the base URL
+      const imgSrc = src.startsWith('http') ? src : `./${src}`;
       return <img src={imgSrc} alt={alt} loading="lazy" />;
     }
   };
